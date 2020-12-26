@@ -43,7 +43,6 @@
 		<div class="row">
 			<div class="col-md-10 offset-md-1">
 
-				<!-- 'display block' table -->
 				<h3 class="table-title" ng-if="block">Block</h3>
 				<table class="table table-striped" ng-if="block">
 					<tbody>
@@ -73,9 +72,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<!-- end 'display block' table -->
 
-				<!-- 'display transaction' table -->
 				<h3 class="table-title" ng-if="transaction">Transaction</h3>
 				<table class="table table-striped" ng-if="transaction">
 					<tbody>
@@ -93,9 +90,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<!-- end 'display transaction' table -->
 
-				<!-- 'display address' table -->
 				<h3 class="table-title" ng-if="addressData">Address</h3>
 				<p id="balance-text" ng-if="addressData">(Balance: {{ addressData.addressBalance }})</p>
 				<table class="table table-striped" ng-if="addressData">
@@ -114,7 +109,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<!-- end 'display address' table -->
+			
 
 			</div>
 		</div>
