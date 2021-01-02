@@ -1,4 +1,27 @@
 # BlockChain2.0
+# Program nasıl çalıştırılır.
+- Kodu çalıştırmak için ilk olarak. İndirilen kodun bulunduğu ana dizinden cmd açılır. 
+- npm run node_1 yazılır ve http://localhost:3001 sayfasıyla bağlantı sağlanır.
+- Farklı bir cmd ekranına; npm run node_2 yazılır ve http://localhost:3002 sayfasıyla bağlantı sağlanır.
+- İki url de açılıp, 3001 in url ekleme kısmına http://localhost:3002 yazılır ve ekle butonuna basılır.
+- Burada 2 localhost arasında bir ağ kurmuş olduk.
+- Daha sonra istenilen localhost'tan veri ekle denilerek istenilen veriler eklenir.
+- Eğer veriyi gizli olarak seçerseniz, verinin 1. boşluğundaki (Id) ifadeyi saklamanız gerekir.
+- Veriyi eklediğinizde altta bir hash ifadesi çıkacaktır. Bu hash ifadesini de saklamalısınız.
+- Bir sonraki adımda, diğer localhost'u açıp orada 'veri ara' seçilir ve önceki hash ifadesi aratılır.
+- 
+- Arama kısmında küçük bir sıkıntıdan dolayı verilere ulaşmak için iki defa arama butonuna tıklamalısınız.
+- 
+- Sonuçta gizli olan veri gözükmez.
+- Sayfayı yenileyip, bu sefer de detaylı aram yerine saklanılan id yazılarak hash ile beraber aratılırsa;
+- Bu sefer gizli olan veriyi de gösterecektir.
+-
+- İyi günler :)
+
+
+
+
+# Programın çalışma mantığı
 # Tek bir localhost kullanarak yapmak için;
 - Kodu çalıştırmak için ilk olarak. İndirilen kodun bulunduğu ana dizinden cmd açılır. 
 - npm run node_1 yazılır ve http://localhost:3001/ sayfasıyla bağlantı sağlanır.

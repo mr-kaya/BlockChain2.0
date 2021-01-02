@@ -20,7 +20,9 @@ app.get('/blockchain', function (req, res) {
 app.post('/transaction', function(req, res) {
     const newTransaction = req.body;
     const blockIndex = bitcoin.addTransactionToPendingTransactions(newTransaction);
-    res.json({note: `Transaction will be added in block ${blockIndex}.`});
+    //res.json({note: `Transaction will be added in block ${blockIndex}.`});
+
+    res.redirect('/mine');
 }); 
 
 app.post('/transaction/broadcast', function(req, res) {
@@ -69,25 +71,14 @@ app.get('/mine', function(req, res) {
 
         requestPromises.push(rp(requestOptions));
     });
-    Promise.all(requestPromises).then(data => {
-        const requestOptions = {
-            uri: bitcoin.currentNodeUrl + '/transaction/broadcast',
-            method: 'POST',
-            body: {
-                amount: 12.5,
-                sender: "00",
-                recipient: nodeAddress
-            },
-            json: true
-        };
-
-        return rp(requestOptions);
-    }).then(data => {
+    Promise.all(requestPromises).then(data => { //Ek sayfaya geçip yazı yazdırma yeri.
         res.json({
             note: "New block mined & broadcast successfully",
             block: newBlock
         })
     });
+
+    res.redirect('/block-add');
 })
 
 app.post('/receive-new-block', function(req, res) {
@@ -137,9 +128,7 @@ app.post('/register-and-broadcast-node', function(req, res) {
         };
         return rp(bulkRegisterOptions);
     })
-    .then(data => {
-        res.json({note: 'New node registered with network successfully.'});
-    }) 
+    res.redirect('/')
 });
 
 //register a node with the network
@@ -209,6 +198,13 @@ app.get('/consensus', function(req, res) {
  * Son Adım 
  */
 
+app.get('/block', function(req, res) {
+    const getLastBlockHash = bitcoin.getLastBlock();
+    res.json({
+        block: getLastBlockHash
+    });
+});
+
 app.get('/block/:blockHash', function(req, res) { //Hash ifadesine göre arama yapar.
     const blockHash = req.params.blockHash;
     const correctBlock = bitcoin.getBlock(blockHash);
@@ -240,8 +236,16 @@ app.get('/address/:address', function(req, res) {
  * Son Adım
  */
 
+app.get('/', function(req, res) {
+    res.sendFile('./index.html', {root: __dirname});
+});
+
 app.get('/block-explorer', function(req, res) {
     res.sendFile('./block-explorer/index.html', { root: __dirname });
+});
+
+app.get('/block-add', function(req, res) {
+    res.sendFile('./block-add/index.html', {root: __dirname});
 });
 
 app.listen(port, function() {

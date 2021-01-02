@@ -18,24 +18,24 @@
 		</div>
 		<div class="row">
 			<div class="col-md-6 offset-md-3">
-				<form ng-submit="search(searchValue)">
+				<form ng-submit="search(searchValue, detailSearch)">
 					<div class="form-group">
-						<input type="text" class="form-control" ng-model="searchValue">
+						<input type="text" class="form-control" placeholder="Aranacak bloğun hash ifadesini giriniz." ng-model="searchValue">
 					</div>
 					<div class="form-group">
-						<select class="form-control" ng-model="searchType">
-							<option value="block">Block Hash</option>
-							<option value="transaction">Transaction ID</option>
-							<option value="address">Address</option>
-						</select>
+						<details>
+							<summary>Detaylı Arama</summary>
+							<input type="text" class="form-control" ng-model="detailSearch">
+						</details>
 					</div>
 					<button
+						id="btn"
 						type="submit"
 						class="btn btn-primary margin-auto btn-search">
 							Search
 					</button>
 					<p ng-if="!block && !transaction && !addressData && initialSearchMade" class="no-data-text">
-						No data found for search.
+						Aranan veriler bulunamadı!
 					</p>
 				</form>
 			</div>
@@ -62,55 +62,15 @@
 							<td class="bold">Nonce</td>
 							<td>{{ block.nonce }}</td>
 						</tr>
-						<tr>	
-							<td class="bold">Previous Hash</td>
-							<td>{{ block.previousBlockHash }}</td>
-						</tr>
-						<tr>	
-							<td class="bold">Number Transactions</td>
-							<td>{{ block.transactions.length }}</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<h3 class="table-title" ng-if="transaction">Transaction</h3>
-				<table class="table table-striped" ng-if="transaction">
-					<tbody>
-						<tr>	
-							<td class="bold">Sender</td>
-							<td>{{ transaction.sender }}</td>
-						</tr>
-						<tr>	
-							<td class="bold">Recipient</td>
-							<td>{{ transaction.recipient }}</td>
-						</tr>
-						<tr>	
-							<td class="bold">Amount</td>
-							<td>{{ transaction.amount }}</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<h3 class="table-title" ng-if="addressData">Address</h3>
-				<p id="balance-text" ng-if="addressData">(Balance: {{ addressData.addressBalance }})</p>
-				<table class="table table-striped" ng-if="addressData">
-					<thead>
 						<tr>
-							<th scope="col">Sender</th>
-							<th scope="col">Recipient</th>
-							<th scope="col">Amount</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="transaction in addressData.addressTransactions">
-							<td>{{ transaction.sender }}</td>
-							<td>{{ transaction.recipient }}</td>
-							<td>{{ transaction.amount }}</td>
+							<td class="bold">
+								Bilgiler
+							</td>
+							<td id="newRow">
+							</td>
 						</tr>
 					</tbody>
 				</table>
-			
-
 			</div>
 		</div>
 	</div>
@@ -120,52 +80,47 @@
 
 		app.controller('MainController', function($scope, $http) {
 			$scope.block = null;
-			$scope.transaction = null;
-			$scope.addressData = null;
 			$scope.initialSearchMade = false;
+			$scope.res = [];
 
-			$scope.fetchBlock = function(blockHash) {
+			var veriSecHtml = '';
+			var sayac01 = true;
+
+			var brBool;
+
+			$scope.search = function(blockHash, detailSearch) {
+				$scope.initialSearchMade = true;
+
 				$http.get(`/block/${blockHash}`)
 				.then(response => {
 					$scope.block = response.data.block;
-					$scope.transaction = null;
-					$scope.addressData = null;
-				});
-			};
-
-			$scope.fetchTransaction = function(transactionId) {
-				$http.get(`/transaction/${transactionId}`)
-				.then(response => {
-					$scope.transaction = response.data.transaction;
-					$scope.block = null;
-					$scope.addressData = null;
-				});				
-			};
-
-			$scope.fetchAddressData = function(address) {
-				$http.get(`/address/${address}`)
-				.then(response => {
-					$scope.addressData = response.data.addressData;
-					if (!$scope.addressData.addressTransactions.length) $scope
-						.addressData = null;
-					$scope.block = null;
-					$scope.transaction = null;
-				});				
-			};
-
-			$scope.search = function(searchValue) {
-				$scope.initialSearchMade = true;
-				if ($scope.searchType === 'block') {
-					$scope.fetchBlock(searchValue);
+					
+					for(var k in $scope.block.transactions) {
+						for(var i in $scope.block.transactions[k]) {
+							$scope.res.push([i, $scope.block.transactions[k][i]]); 
+						}
+					}
+	
+					for(let k=1; k<$scope.res[1].length; k++) {
+						for(let z=0; z<$scope.res[1][k].length; z++) {
+							if($scope.res[0][1][z] == '0' || $scope.res[1][k][z] == detailSearch) {
+								veriSecHtml += $scope.res[1][k][z];
+								veriSecHtml += ' : ';
+								veriSecHtml += $scope.res[2][k][z];
+								veriSecHtml +='<br>';
+							}
+						}
+					}
+				});	
+				brBool = $( "br" ).find( "br" );
+				if(brBool.prevObject.length == 0) {
+					$('#newRow').append(veriSecHtml); 
 				}
-				else if ($scope.searchType === 'transaction') {
-					$scope.fetchTransaction(searchValue);
-				}
-				else if ($scope.searchType === 'address') {
-					$scope.fetchAddressData(searchValue);
+				brBool = $( "br" ).find( "br" );
+				if(brBool.prevObject.length != 0) {
+					document.getElementById("btn").disabled = true;
 				}
 			};
-
 		});
 	</script>
 

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Add Block</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body ng-app="AddBlock">
+	<div class="container" ng-controller="MainController">
+		<div class="row">
+			<div class="col-md-8 offset-md-2">
+                <h1 id="page-title">Blok Ekle</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 offset-md-2">
+				<form method="post" action="transaction">
+					<div class="row">
+						<div class="col-md-8">
+							<div id="inputFormRow">
+							<!--Burada spawn olacak.-->
+							</div>
+							<div id="newRow"></div>
+							<button id="addRow" type="button" class="btn btn-info">Öznitelik Arttır</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="d-flex p-2 col-md-8">
+							<button
+								type="submit"
+								class="btn btn-primary btn-lg margin-auto btn-search">
+									BLOK EKLE
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+    </div>
+    
+    <div class="row" ng-controller="MainController">
+        <div class="col-md-10 offset-md-1">
+            <h3 class="table-title" ng-if="block != null && block.hash != '0'">Blok Hash</h3>
+            <table class="table table-striped" ng-if="block != null && block.hash != '0'">
+                <tbody>
+                    <tr>	
+                        <td class="bold">Block Hash</td>
+                        <td>
+							{{ block.hash }}
+						</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+	<script>
+		window.app = angular.module('AddBlock', []);
+		
+		
+		$("#addRow").click(function () {
+			var html = '';
+			html += '<div id="inputFormRow">';
+			html += '<div class="input-group mb-3">';
+
+			html += '<div>';
+			html += '<select class="custom-select" id="inputGroupSelect01" name="optionId[]">';
+			html += '<option value="0">Açık</option>';
+			html += '<option value="1">Gizli</option>';
+			html += '</select>';
+			html += '</div>';
+			
+			html += '<input type="text" name="inputId[]" class="form-control m-input" placeholder="Öznitelik girin. Örn. isim" autocomplete="off">';
+			html += '<input type="text" name="listId[]" class="form-control m-input" placeholder="Cevap girin. Örn. Mehmet" autocomplete="off">';
+			html += '<div class="input-group-append">';
+			html += '<button id="removeRow" type="button" class="btn btn-danger">Remove</button>';
+
+			html += '</div>';
+			html += '</div>';
+			html += '</div>';
+
+            $('#newRow').append(html);
+		});
+		$(document).on('click', '#removeRow', function () {
+			$(this).closest('#inputFormRow').remove();
+		});
+
+		app.controller('MainController', function($scope, $http) {
+			$scope.block = null;
+
+			$http.get(`/block`).then(response => {
+					$scope.block = response.data.block;
+					console.log($scope.block.hash);
+			});
+		});
+	</script>
+
+	<style type="text/css">
+		html, body {
+			min-height: 100vh;
+			background-color: #e8e8e8;
+		}
+		.container {
+			padding-top: 50px;
+			padding-bottom: 50px;
+		}
+		#page-title {
+			text-align: center;
+			margin-bottom: 40px;
+		}
+		.table-title {
+			margin-bottom: 20px;
+			text-align: center;
+		}
+		.table {
+			background-color: #ffffff;
+			box-shadow: 2px 2px 15px -3px rgba(0,0,0,0.75);
+		}
+		#balance-text {
+			text-align: center;
+			margin-top: -20px;
+			margin-bottom: 30px;
+		}
+		.margin-auto {
+			margin: auto;
+			display: block;
+		}
+		.btn-search {
+			margin-bottom: 50px;
+		}
+		.bold {
+			font-weight: 700;
+		}
+		.no-data-text {
+			color: red;
+			text-align: center;
+		}
+
+        label,
+        textarea {
+            padding: 10px;
+            line-height: 1.5;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-shadow: 1px 1px 1px #999;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+	</style>
+
+
+</body>
+
+</html>

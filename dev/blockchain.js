@@ -9,7 +9,7 @@ function Blockchain() {
     this.currentNodeUrl = currentNodeUrl;
     this.networkNodes = [];
 
-    this.createNewBlock(100, '0', '0'); /**Genessis Block */
+    this.createNewBlock(0, '0', '0'); /**Genessis Block */
 };
 
 
@@ -62,8 +62,8 @@ Blockchain.prototype.proofOfWork = function(previousBlockHash, currentBlockData)
     while(hash.substring(0,4) !== '0000') {
         nonce++;
         hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
-        console.log(hash);
     }
+    console.log(hash);
 
     return nonce;
 };
@@ -87,7 +87,7 @@ Blockchain.prototype.chainIsValid = function(blockchain) {
 
     //ilk bloğun doğruluk kontrolü
     const genessisBlock = blockchain[0];
-    const correctNonce = genessisBlock['nonce'] === 100;
+    const correctNonce = genessisBlock['nonce'] === 0;
     const correctPreviousBlockHash = genessisBlock['previousBlockHash'] === '0';
     const correctHash = genessisBlock['hash'] === '0';
     const correctTransactions = genessisBlock['transactions'].length === 0;

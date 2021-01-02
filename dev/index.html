@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Blockchain_2.0</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="mx-auto navbar-brand" style="color: whitesmoke; font-weight: bold;">Blockchain_2.0</a>
+    </nav>
+    <div class="container mx-auto">
+        <div class="mx-auto">
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
+        <form method="POST" action="/register-and-broadcast-node">
+            <div class="row">
+                <p class="mx-auto">Not : Ağın isminin sonunda '/' olmamalıdır.
+                    <br>
+                    Örn : http://localhost:3002/ yerine http://localhost:3002 olmalıdır.
+                </p>
+            </div>
+            <div class="row input-group mb-3 offset-md-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">URL : </span>
+                </div>
+                <input type="text" name="newNodeUrl" class="form-control col-md-5" placeholder="Ağına Kişi Ekle" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-primary btn-md margin-auto btn-search mx-auto col-md-1">Ekle</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <form method="GET" action="/block-add">
+                        <button type="submit" class="btn btn-success col-md-4 offset-md-4">Veri Ekle</button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <form method="GET" action="/block-explorer">
+                        <button type="submit" class="btn btn-success col-md-4 offset-md-4">Veri Ara</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
