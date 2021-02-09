@@ -1,6 +1,47 @@
 const Blockchain = require('./blockchain');
 const bitcoin = new Blockchain();
 
+
+const veri = {"chain":[{"index":1,"timestamp":1610904397399,"transactions":[],"nonce":0,"hash":"0","previousBlockHash":"0"},{"index":2,"timestamp":1610904754190,"transactions":[{"optionId[]":["0","0","1"],"inputId[]":["isim","soyisim","yas"],"listId[]":["mustafa","kaya","23"]}],"nonce":125680,"hash":"00004e5797f338cbcc5be4954fb5121ee6c13556e7d9e0a3f59415354b7a4137","previousBlockHash":"0"}],"pendingTransactions":[],"currentNodeUrl":"http://localhost:3001","networkNodes":[]} 
+
+console.log("doğruluk : "+bitcoin.chainIsValid(veri.chain));
+
+/*
+const previousBlockHash = '0AOIEOIJGA325JKSASDKJSADG3GASDG';
+const currentBlockData = [
+  {
+    amount: 101,
+    sender: "AOJDSIJAE0EAJGWEJIGAO4",
+    recipient: "OJG498JUGOI4IGJOEJGFDKG"
+  },
+  {
+    amount: 202,
+    sender: "BSJDSIJAE0EAJGWEJIGAO4",
+    recipient: "BSG498JUGOI4IGJOEJGFDKG"
+  },
+  {
+    amount: 303,
+    sender: "CSJDSIJAE0EAJGWEJIGAO4",
+    recipient: "CSG498JUGOI4IGJOEJGFDKG"
+  },
+  {
+    amount: 404,
+    sender: "DSJDSIJAE0EAJGWEJIGAO4",
+    recipient: "DSG498JUGOI4IGJOEJGFDKG"
+  }
+];
+
+console.log(bitcoin.proofOfWork(previousBlockHash, currentBlockData));
+
+*/
+/*
+bitcoin.createNewBlock(8325324, 'OEGGAO320494', 'JASKOEGOAWJO');
+bitcoin.createNewTransaction(100, 'OG34OGJ3434', 'OOFJ30JFAOWJ');
+console.log(bitcoin);
+*/
+/*
+console.log(bitcoin);
+*/
 /*
 //node dev/test.js
 const bc1 = {

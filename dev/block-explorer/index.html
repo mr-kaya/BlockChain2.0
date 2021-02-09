@@ -13,26 +13,36 @@
 	<div class="container" ng-controller="MainController">
 		<div class="row">
 			<div class="col-md-8 offset-md-2">
-				<h1 id="page-title">Block Explorer</h1>
+				<h1 id="page-title">Blok Arama</h1>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-6 offset-md-3">
-				<form ng-submit="search(searchValue, detailSearch)">
+				<form ng-submit="search(searchValue, detailSearch0, detailSearch1, detailSearch2, detailSearch3, detailSearch4, detailSearch5, detailSearch6, detailSearch7, detailSearch8, detailSearch9)">
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Aranacak bloğun hash ifadesini giriniz." ng-model="searchValue">
 					</div>
 					<div class="form-group">
 						<details>
-							<summary>Detaylı Arama</summary>
-							<input type="text" class="form-control" ng-model="detailSearch">
+							<summary>Gizli Öznitelik Arama</summary>
+							<input type="text" id="id0" class="form-control" style="display: none;" ng-model="detailSearch0" placeholder="Öznitelik girin">
+							<input type="text" id="id1" class="form-control" style="display: none;" ng-model="detailSearch1" placeholder="Öznitelik girin">
+							<input type="text" id="id2" class="form-control" style="display: none;" ng-model="detailSearch2" placeholder="Öznitelik girin">
+							<input type="text" id="id3" class="form-control" style="display: none;" ng-model="detailSearch3" placeholder="Öznitelik girin">
+							<input type="text" id="id4" class="form-control" style="display: none;" ng-model="detailSearch4" placeholder="Öznitelik girin">
+							<input type="text" id="id5" class="form-control" style="display: none;" ng-model="detailSearch5" placeholder="Öznitelik girin">
+							<input type="text" id="id6" class="form-control" style="display: none;" ng-model="detailSearch6" placeholder="Öznitelik girin">
+							<input type="text" id="id7" class="form-control" style="display: none;" ng-model="detailSearch7" placeholder="Öznitelik girin">
+							<input type="text" id="id8" class="form-control" style="display: none;" ng-model="detailSearch8" placeholder="Öznitelik girin">
+							<input type="text" id="id9" class="form-control" style="display: none;" ng-model="detailSearch9" placeholder="Öznitelik girin">
+							<button id="addRow" type="button" class="btn btn-info">Öznitelik Arttır</button>
 						</details>
 					</div>
 					<button
 						id="btn"
 						type="submit"
 						class="btn btn-primary margin-auto btn-search">
-							Search
+							Ara
 					</button>
 					<p ng-if="!block && !transaction && !addressData && initialSearchMade" class="no-data-text">
 						Aranan veriler bulunamadı!
@@ -42,8 +52,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-10 offset-md-1">
-
-				<h3 class="table-title" ng-if="block">Block</h3>
+				<h3 class="table-title" ng-if="block">Blok</h3>
 				<table class="table table-striped" ng-if="block">
 					<tbody>
 						<tr>	
@@ -78,6 +87,16 @@
 	<script>
 		window.app = angular.module('BlockExplorer', []);
 
+		var addRowFunctionSayac = 0;
+		$(document).ready(function() {
+			$("#addRow").click(function() {
+				if(addRowFunctionSayac < 10) {
+					document.getElementById("id"+addRowFunctionSayac).style.display = "inline";
+					addRowFunctionSayac += 1;
+				}
+			});
+		});
+
 		app.controller('MainController', function($scope, $http) {
 			$scope.block = null;
 			$scope.initialSearchMade = false;
@@ -88,9 +107,9 @@
 
 			var brBool;
 
-			$scope.search = function(blockHash, detailSearch) {
+			$scope.search = function(blockHash, detailSearch0, detailSearch1, detailSearch2, detailSearch3, detailSearch4, detailSearch5, detailSearch6, detailSearch7, detailSearch8, detailSearch9) {
 				$scope.initialSearchMade = true;
-
+				
 				$http.get(`/block/${blockHash}`)
 				.then(response => {
 					$scope.block = response.data.block;
@@ -100,14 +119,33 @@
 							$scope.res.push([i, $scope.block.transactions[k][i]]); 
 						}
 					}
-	
+
 					for(let k=1; k<$scope.res[1].length; k++) {
 						for(let z=0; z<$scope.res[1][k].length; z++) {
-							if($scope.res[0][1][z] == '0' || $scope.res[1][k][z] == detailSearch) {
-								veriSecHtml += $scope.res[1][k][z];
-								veriSecHtml += ' : ';
-								veriSecHtml += $scope.res[2][k][z];
-								veriSecHtml +='<br>';
+							if($scope.res[0][1][z] == '0' || 
+							$scope.res[1][k][z] == detailSearch0 ||
+							$scope.res[1][k][z] == detailSearch1 || 
+							$scope.res[1][k][z] == detailSearch2 ||
+							$scope.res[1][k][z] == detailSearch3 ||
+							$scope.res[1][k][z] == detailSearch4 ||
+							$scope.res[1][k][z] == detailSearch5 ||
+							$scope.res[1][k][z] == detailSearch6 ||
+							$scope.res[1][k][z] == detailSearch7 ||
+							$scope.res[1][k][z] == detailSearch8 ||
+							$scope.res[1][k][z] == detailSearch9) 
+							{
+								if($scope.res[0] == 'optionId[],0' || $scope.res[0] == 'optionId[],1') {
+									veriSecHtml += $scope.res[1][k];
+									veriSecHtml += ' : ';
+									veriSecHtml += $scope.res[2][k];
+									veriSecHtml +='<br>';
+								}
+								else {
+									veriSecHtml += $scope.res[1][k][z];
+									veriSecHtml += ' : ';
+									veriSecHtml += $scope.res[2][k][z];
+									veriSecHtml +='<br>';
+								}
 							}
 						}
 					}
@@ -118,7 +156,7 @@
 				}
 				brBool = $( "br" ).find( "br" );
 				if(brBool.prevObject.length != 0) {
-					document.getElementById("btn").disabled = true;
+					//document.getElementById("btn").disabled = true;
 				}
 			};
 		});
@@ -170,3 +208,4 @@
 </body>
 
 </html>
+

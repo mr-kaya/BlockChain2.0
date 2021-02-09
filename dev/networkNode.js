@@ -131,6 +131,7 @@ app.post('/register-and-broadcast-node', function(req, res) {
     res.redirect('/')
 });
 
+
 //register a node with the network
 app.post('/register-node', function(req, res) {
     const newNodeUrl = req.body.newNodeUrl;
@@ -205,7 +206,8 @@ app.get('/block', function(req, res) {
     });
 });
 
-app.get('/block/:blockHash', function(req, res) { //Hash ifadesine göre arama yapar.
+app.get('/block/:blockHash', function(req, res) { 
+    //Hash ifadesine göre arama yapar.
     const blockHash = req.params.blockHash;
     const correctBlock = bitcoin.getBlock(blockHash);
     res.json({
