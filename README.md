@@ -18,8 +18,11 @@
 -
 - İyi günler :)
 
-
-
+![1](https://user-images.githubusercontent.com/18140418/211793815-9ebb91ed-6878-4e13-a926-88c7b681f13b.png)
+![2](https://user-images.githubusercontent.com/18140418/211793823-43fb2ee5-14fa-4cf8-b0a1-c797eddad643.png)
+![3](https://user-images.githubusercontent.com/18140418/211793800-d53310dc-edf9-4aec-926e-8df7e352e569.png)
+![4](https://user-images.githubusercontent.com/18140418/211793807-311dfadc-38df-4d04-97d5-047bf2e93c3c.png)
+![5](https://user-images.githubusercontent.com/18140418/211793813-49658bff-2cd2-4341-a2e6-445608ae3f61.png)
 
 # Programın çalışma mantığı
 # Tek bir localhost kullanarak yapmak için;
